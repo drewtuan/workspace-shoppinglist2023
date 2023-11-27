@@ -37,23 +37,67 @@
   <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore-compat.js"></script>
   <script>
     const firebaseConfig = {
-      apiKey: "AIzaSyAzcwgZuLA7dO9g4sQhXQVTUgCo0M8m2qM",
-      authDomain: "grocerylist-91956.firebaseapp.com",
-      databaseURL: "https://grocerylist-91956.firebaseio.com",
-      projectId: "grocerylist-91956",
-      storageBucket: "grocerylist-91956.appspot.com",
-      messagingSenderId: "813812426276",
-      appId: "1:813812426276:web:93e5897af12892ff78dab1",
-      measurementId: "G-VZ83BTR72T"
-    }; 
+     
+      apiKey: "AIzaSyCW5TP4rg9eIRn9xD8D9xdlmU1MEwl-WKs",
+
+      authDomain: "database-3515d.firebaseapp.com",
+
+      projectId: "database-3515d",
+
+      storageBucket: "database-3515d.appspot.com",
+
+      messagingSenderId: "850822660143",
+
+      appId: "1:850822660143:web:4c0ef717827dbf922c86da",
+
+      measurementId: "G-3KNTNHWPNT"
+    };
+
     // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const db = firebase.firestore();
+    firebase.initializeApp(firebaseConfig);  // initialize the firebase app
+    const db = firebase.firestore(); // get the firestore database.  Now you have the firebase service
+
+    // Read the data from the database and update the list
+    $('li').remove();
+
+    db.collection("Shopping List").get().then((querySnapshot) => {
+      console.log(querySnapshot);
+      querySnapshot.forEach((doc) => {
+        var item = doc.data().item;
+        console.log("loading....", item);
+        // newlist = "";  => newlist += "<li class= "cool>" + item + "</li>";
+        //$("#todo").append("<li>" + item + "</li>");
+      });
+
+      // update the list
+      $("#todo").append(newlist);
+      // make it clickable
+      $("#todo").click();
+
+    });
+   
 
     // Save the list to database
+    $("#save").click(function() {
+      // clear the database before you save.
+      
+      // testing if the database is connected
+      $('li').each(function(){
+        var value = $(this).text();
+        console.log("Saving ", value);
+        db.collection("Shopping List").add({
+          item: value
+        });
+      });
+
+
+
+    });
 
 
   </script>
+
+ 
 
 
 </body>
